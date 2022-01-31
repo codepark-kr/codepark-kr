@@ -4,7 +4,7 @@
   <image src="https://img.shields.io/badge/spring-%236DB33F.svg?style=flat&logo=spring&logoColor=white" alt="spring"></image>
   <image src="https://img.shields.io/badge/JWT-black?style=flat&logo=JSON%20web%20tokens" alt="jwt"></image>
   <image src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=mariadb&logoColor=white" alt="mariadb"></image>
-  <image src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=amazonaws&logoColor=white" alt="oracle"></image>
+  <image src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=oracle&logoColor=white" alt="oracle"></image>
   <image src="https://img.shields.io/badge/AWS-%23FF9900.svg?style=flat&logo=amazon-aws&logoColor=white" alt="aws"></image>
   <image src="https://img.shields.io/badge/javascript-%23323330.svg?style=flat&logo=javascript&logoColor=%23F7DF1E" alt="js"></image>
   <image src="https://img.shields.io/badge/SASS-hotpink.svg?style=flat&logo=SASS&logoColor=white" alt="sass"></image>
