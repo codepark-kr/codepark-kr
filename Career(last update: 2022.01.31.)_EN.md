@@ -26,7 +26,7 @@
 > Land Subsidence Monitoring System (work in progress)
 > 
 > **Tech Stack**  
-> Spring Boot, JDK 11, MariaDB, ES6, Sass  
+> Spring Boot 2.5.4, JDK 11, MariaDB, ES6, Sass  
 > Amazon AWS, ELK, Docker, jenkins, k8s
 > 
 >  **Position**  
