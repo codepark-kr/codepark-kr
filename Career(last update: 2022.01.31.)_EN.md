@@ -13,7 +13,7 @@
 > [Infographic : Temperature & Precipitation](https://data.kma.go.kr/community/temperatureRain.do?pgmNo=722)
 > 
 > **Tech Stack**  
-> Spring Framework, JDK 1.6, Oracle DBMS
+> Spring Framework, JDK 1.7, Oracle DBMS
 >  
 >  **Position**  
 >  full-stack developer
