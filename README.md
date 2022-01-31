@@ -19,6 +19,8 @@
   <image src="https://github-readme-stats.vercel.app/api?username=codepark-kr&show_icons=true&theme=dark&count_private=true" alt="stats" style="width: 420px;" />
   <image src="https://github-readme-stats.vercel.app/api/top-langs/?username=codepark-kr&layout=compact&hide=csharp&theme=dark" alt="top-langs" style="width: 351px;"/>
   <br/>
+contact : codepark.kr@gmail.com
+  <br/>
   <br/>
   <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fcodepark-kr&count_bg=%23757164&title_bg=%231e1e1e&icon=ghostery.svg&icon_color=%23FFFFFF&title=hits&edge_flat=false" alt="hit counter"/>
 </p>
