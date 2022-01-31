@@ -22,7 +22,7 @@
 ### 2022
 > **\[National Research Foundation of Korea]**  
 > 
-> *Whole website development  
+> *Whole website development*  
 > Land Subsidence Monitoring System (work in progress)
 > 
 > **Tech Stack**  
