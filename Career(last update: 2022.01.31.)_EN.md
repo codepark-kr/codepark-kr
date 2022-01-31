@@ -3,10 +3,10 @@
 > **\[Korea Meteorological Administration]**  
 > 
 > *REST API, in public data portal korea*  
-> [short-term forecast inquiry service](https://www.data.go.kr/en/data/15084084/openapi.do)  
+> [Short-term forecast inquiry service](https://www.data.go.kr/en/data/15084084/openapi.do)  
 > [Domestic airport take-off forecast inquiry service](https://www.data.go.kr/en/data/15095109/openapi.do)    
 > [Global Meteorological Service (GTS) inquiry service](https://www.data.go.kr/en/data/15095158/openapi.do)    
-> [impact forecast inquiry service](https://www.data.go.kr/en/data/15095149/openapi.do)    
+> [Impact forecast inquiry service](https://www.data.go.kr/en/data/15095149/openapi.do)    
 > 
 > *Visualized Weather data (animated with js, chart.js)*  
 > [Infographic : Monsoon](https://data.kma.go.kr/community/detailVisualization.do?pgmNo=722)  
