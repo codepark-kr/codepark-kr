@@ -20,7 +20,7 @@
   <image src="https://github-readme-stats.vercel.app/api?username=codepark-kr&show_icons=true&theme=dark&count_private=true" alt="stats" style="width: 420px;" />
   <image src="https://github-readme-stats.vercel.app/api/top-langs/?username=codepark-kr&layout=compact&hide=csharp&theme=dark" alt="top-langs" style="width: 351px;"/>
   <br/>
-Currently writing to <a href="https://github.com/codepark-kr/Zwillie-API-SERVER/wiki"><strong>Zwillie-API-SERVER Wiki</strong></a>
+Currently writing the <a href="https://github.com/codepark-kr/Zwillie-API-SERVER/wiki"><strong>Zwillie-API-SERVER Wiki</strong></a>
 <br/>
 contact : codepark.kr@gmail.com
   <br/>
