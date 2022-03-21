@@ -2,18 +2,21 @@
 ### 2021
 > **\[Korea Meteorological Administration]**  
 > 
-> *REST API, in public data portal korea*  
+> REST API, in public data portal korea  
 > [Short-term forecast inquiry service](https://www.data.go.kr/en/data/15084084/openapi.do)  
 > [Domestic airport take-off forecast inquiry service](https://www.data.go.kr/en/data/15095109/openapi.do)    
 > [Global Meteorological Service (GTS) inquiry service](https://www.data.go.kr/en/data/15095158/openapi.do)    
 > [Impact forecast inquiry service](https://www.data.go.kr/en/data/15095149/openapi.do)    
 > 
-> *Visualized Weather data (animated with js, chart.js)*  
+> Visualized Weather data (animated with js, chart.js)  
 > [Infographic : Monsoon](https://data.kma.go.kr/community/detailVisualization.do?pgmNo=722)  
 > [Infographic : Temperature & Precipitation](https://data.kma.go.kr/community/temperatureRain.do?pgmNo=722)
 > 
+> Cardnews  
+> [Visualization : Cardnews](https://data.kma.go.kr/community/selectCardNewsList.do?pgmNo=722)
+> 
 > **Tech Stack**  
-> Spring Framework, JDK 1.7, Oracle DBMS
+> Spring Framework, EgovFramework, JDK 1.7, MyBatis, Oracle DB
 >  
 >  **Position**  
 >  full-stack developer
@@ -22,7 +25,7 @@
 ### 2022
 > **\[National Research Foundation of Korea]**  
 > 
-> *Whole website development*  
+> Website, API development  
 > [Land Subsidence Monitoring System (work in progress)](https://landsafe.selab.cloud/)
 > 
 > **Tech Stack**  
