@@ -8,7 +8,7 @@
 > [기상청_세계기상전문(GTS)_조회서비스](https://www.data.go.kr/en/data/15095158/openapi.do)    
 > [기상청_영향예보_조회서비스](https://www.data.go.kr/en/data/15095149/openapi.do)    
 > 
-> 인포그래픽, 기상자료 개방포털 시각화 정보 (js, chart.js)  
+> 인포그래픽, 기상자료 개방포털 시각화 정보  
 > [인포그래픽 : 장마](https://data.kma.go.kr/community/detailVisualization.do?pgmNo=722)  
 > [인포그래픽 : 강수·기온](https://data.kma.go.kr/community/temperatureRain.do?pgmNo=722)
 > 
