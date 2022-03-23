@@ -8,6 +8,7 @@
 * [x] fix `% Attempt to call undefined procedure: 'PSINSAR_PROCESS'.`
 * [x] Analyze the script, success to execute
 * [x] Success to execute zip_shp.py
+* [ ] Fix HttpStatus 451
 * [ ] Success to upload result file and generate to geoserver layer
 
 ---
@@ -76,6 +77,21 @@
 > **Solution** :: When execute idl .pro file with shell script, the extension '.pro' is already included so if try to execute with the command that like `idl -e FILENAME.pro` would syntax error occurred.
 > So omit to the extension. Change to `shell_command = ["idl", "-e" "psinsar_process_test.sav.", "-args" ...]` to `shell_command = ["idl", "-e", "psinsar_senitnel1_test", "-args" ... ]`
 
+### Comparison enum values in Python3
+> **Problem**: Comparison enum values has been failed.    
+> **Solution**: Explanation follows:
+> ```python
+> from enum import Enum, IntEnum
+> ...
+> class ENUM(IntEnum):
+>     ENUM-NAME = SOME-VALUE
+> ...
+> def send_to_server_result(self, test_file_path, INT-ARG):
+>     if(INT-ARG != ENUM.ENUM-NAME):
+>         DO-SOMETHING
+>         return
+> ```
+
 ---
 
 ## Remark
@@ -84,6 +100,6 @@
 
 ## Reference
 [Omit to Extension when execute .pro file with shell script](https://www.l3harrisgeospatial.com/Support/Forums/aft/7058)  
-[Python : I want to replace single quotes with double quotes in a list](https://stackoverflow.com/questions/42183479/i-want-to-replace-single-quotes-with-double-quotes-in-a-list)
-
+[Python : I want to replace single quotes with double quotes in a list](https://stackoverflow.com/questions/42183479/i-want-to-replace-single-quotes-with-double-quotes-in-a-list)  
+[Python : The Enum types in Python](https://brownbears.tistory.com/531)
 ---
