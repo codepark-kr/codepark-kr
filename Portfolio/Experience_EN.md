@@ -30,7 +30,7 @@
 > 
 > **Tech Stack**  
 > Spring Boot 2.5.4, JDK 11, MariaDB, ES6  
-> Amazon AWS, ELK, Docker, jenkins, k8s
+> Python, Amazon AWS, ELK, Docker, jenkins, k8s
 > 
 >  **Position**  
 >  full-stack developer

@@ -30,7 +30,7 @@
 > 
 > **기술 스택**  
 > Spring Boot 2.5.4, JDK 11, MariaDB, ES6  
-> Amazon AWS, ELK, Docker, jenkins, k8s
+> Python, Amazon AWS, ELK, Docker, jenkins, k8s
 > 
 >  **포지션**  
 >  full-stack developer
