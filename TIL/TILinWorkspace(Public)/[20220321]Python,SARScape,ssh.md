@@ -99,7 +99,9 @@
 ---
 
 ## Reference
+
 [Omit to Extension when execute .pro file with shell script](https://www.l3harrisgeospatial.com/Support/Forums/aft/7058)  
 [Python : I want to replace single quotes with double quotes in a list](https://stackoverflow.com/questions/42183479/i-want-to-replace-single-quotes-with-double-quotes-in-a-list)  
 [Python : The Enum types in Python](https://brownbears.tistory.com/531)
+
 ---
