@@ -65,14 +65,14 @@
 > **Solution** :: open the file, add `# -*- coding: utf-8 -*-` on the first line, save then. Try to execute again.
 
 ### Python Syntax error (replace single quote to double quote)
-![img.png](../Assets/images/img.png)
+![img.png](../../Assets/images/img.png)
 > **Problem** :: The quote for replace is missing. `polygon_obj = eval(polygon_str.replace("'", ""))`  
 > **Solution** :: Wrap the double quote with single quote to replace from single quote to double quote.   
 > So change the statement to : `polygon_obj = eval(polygon_str.replace("'", '"'))`.
 
 
 ### % Attempt to call undefined procedure: 'PSINSAR_PROCESS'.
-![img_1.png](../Assets/images/img_1.png)
+![img_1.png](../../Assets/images/img_1.png)
 > **Problem** :: % Attempt to call undefined procedure: 'PSINSAR_PROCESS'.  
 > **Solution** :: When execute idl .pro file with shell script, the extension '.pro' is already included so if try to execute with the command that like `idl -e FILENAME.pro` would syntax error occurred.
 > So omit to the extension. Change from `shell_command = ["idl", "-e" "psinsar_process_test.sav.", "-args" ...]` to `shell_command = ["idl", "-e", "psinsar_senitnel1_test", "-args" ... ]`
