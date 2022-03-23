@@ -8,7 +8,6 @@
   <image src="https://img.shields.io/badge/AWS-%23FF9900.svg?style=flat&logo=amazon-aws&logoColor=white" alt="aws"></image>
   <image src="https://img.shields.io/badge/Javascript-%23323330.svg?style=flat&logo=javascript&logoColor=%23F7DF1E" alt="js"></image>
   <image src="https://img.shields.io/badge/SASS-hotpink.svg?style=flat&logo=SASS&logoColor=white" alt="sass"></image>
-  <image src="https://img.shields.io/badge/React-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB" alt="react"></image>
 </p>
 
 <h3 align="center">Stats</h3>
