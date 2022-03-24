@@ -1,5 +1,5 @@
 ## Python, SARscape runner, ssh
-`2022.03.21. - `
+`2022.03.21.-2022.03.24.`
 
 ---
 
@@ -8,8 +8,8 @@
 * [x] fix `% Attempt to call undefined procedure: 'PSINSAR_PROCESS'.`
 * [x] Analyze the script, success to execute
 * [x] Success to execute zip_shp.py
-* [ ] Fix HttpStatus 451
-* [ ] Success to upload result file and generate to geoserver layer
+* [x] Fix HttpStatus 451
+* [x] Success to upload result file and generate to geoserver layer
 
 ---
 
@@ -106,6 +106,15 @@
 >         DO-SOMETHING
 >         return
 > ```
+
+### HTTP Request has been succeeded, but the status code is 451
+> ![http-img.png](../../Assets/images/http-image.png)
+> 
+> **Problem:** When I try to call API from client server to generate layer file into geoserver via python and IDL process, 
+> the HTTP request from client server has been succeeded, but got 451 HTTP status.  
+> **Solution:** The request parameter of the API, multipart file(compressed, based on shapefile) occurred problem. The input, the path of targeted to compress files was incorrect, so the compressing process has been succeeded but the file was totaly empty. So the API of client server passed the empty file to geoserver and understandably they returned the response like the request was incorrect, with Http status code 451.
+> like 'The request was incorrect'. So, I changed the statement to define the correct path of targeted- input files. Then It solved.
+
 
 ---
 
