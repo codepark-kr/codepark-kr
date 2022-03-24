@@ -21,7 +21,15 @@ task description on here
 
 ---
 
-## Problem Solving
+## Issues & Problem solving
+### Title
+> ![problem image](problem image)
+>
+> **Problem:**   
+> **Solution:**
+>
+> ![solved image](solved image)
+
 
 ---
 
