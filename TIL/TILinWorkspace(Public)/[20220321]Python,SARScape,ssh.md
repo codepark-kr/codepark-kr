@@ -48,6 +48,21 @@
 >
 > ### Undo the type
 > `u`
+> 
+> ### Unzip compressed files
+> unzip FILENAME.EXT
+> 
+> ### Search domains
+> dig
+> 
+> ### Show executed commands history
+> history
+> 
+> ### Copy and transfer file via ssh*
+> 
+> `scp [ACCOUNT-NAME]@[IP-ADDRESS]:[TARGET-PATH/TARGET-FILENAME] [LOCAL-DESTINATION-PATH(ABSOLUTE)]`  
+> e.g.  
+> `scp myaccount@100.100.100.100:/data/myaccount/landsubsidence/out/165/20220324103531/myfile.zip C:\Users\mylocalaccountname\Downloads`
 
 **== Python ==**
 >
@@ -102,6 +117,7 @@
 
 [Omit to Extension when execute .pro file with shell script](https://www.l3harrisgeospatial.com/Support/Forums/aft/7058)  
 [Python : I want to replace single quotes with double quotes in a list](https://stackoverflow.com/questions/42183479/i-want-to-replace-single-quotes-with-double-quotes-in-a-list)  
-[Python : The Enum types in Python](https://brownbears.tistory.com/531)
+[Python : The Enum types in Python](https://brownbears.tistory.com/531)  
+[SSH : Copy and Transfer file with ssh with scp](https://hyunsuk2.github.io/2018/01/16/ssh/)  
 
 ---
