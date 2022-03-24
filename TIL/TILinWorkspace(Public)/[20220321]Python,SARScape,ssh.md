@@ -23,7 +23,7 @@
 **== commands ==**
 
 > ### Execute python file in cmd
-> `python SCRIPT-NAME.py`
+> `pythonㅇ SCRIPT-NAME.py`
 >
 > ### Edit file with vim editor
 > `vim SCRIPT-NAME.py`
@@ -113,8 +113,7 @@
 > **Problem:** When I try to call API from client server to generate layer file into geoserver via python and IDL process, 
 > the HTTP request from client server has been succeeded, but got 451 HTTP status.  
 > **Solution:** The request parameter of the API, multipart file(compressed, based on shapefile) occurred problem. The input, the path of targeted to compress files was incorrect, so the compressing process has been succeeded but the file was totaly empty. So the API of client server passed the empty file to geoserver and understandably they returned the response like the request was incorrect, with Http status code 451.
-> like 'The request was incorrect'. So, I changed the statement to define the correct path of targeted- input files. Then It solved.
-
+> like 'The request was incorrect'. So, I changed the statement to define the correct path of targeted- input files. Then It solved.  
 
 ---
 
