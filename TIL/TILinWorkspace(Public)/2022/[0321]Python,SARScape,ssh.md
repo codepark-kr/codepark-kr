@@ -35,28 +35,28 @@
 > press ESC, then type to `:q!`
 
 > ### Install requirements
-> pip3 install -r requirements.txt
+> `pip3 install -r requirements.txt`
 
 > ### Execute bash shell script in cmd
-> sh ./SCRIPT-FILENAME.sh
+> `sh ./SCRIPT-FILENAME.sh`
 >
 > ### Create file with cmd
-> cat FILENAME.EXT
+> `cat FILENAME.EXT`
 
 > ### Set line number on vim editor
-> set nu
+> `set nu`
 
 > ### Undo the type
 > `u`
 
 > ### Unzip compressed files
-> unzip FILENAME.EXT
+> `unzip FILENAME.EXT`
 
 > ### Search domains
-> dig
+> `dig`
 
 > ### Show executed commands history
-> history
+> `history`
 
 > ### Copy and transfer file via ssh*
 > `scp [ACCOUNT-NAME]@[IP-ADDRESS]:[TARGET-PATH/TARGET-FILENAME] [LOCAL-DESTINATION-PATH(ABSOLUTE)]`  
@@ -65,10 +65,10 @@
 
 **== Python ==**
 > ### Print something
-> print("something")
+> `print("something")`
 
 > ### Exit program with cmd
-> exit()
+> `exit()`
 
 ---
 
