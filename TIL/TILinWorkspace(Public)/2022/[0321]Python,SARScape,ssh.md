@@ -1,5 +1,10 @@
-## Python, SARscape runner, ssh
-`2022.03.21.-2022.03.24.`
+## Python, SARscape runner, ssh 
+`2022.03.21.-2022.03.24.`  
+
+## Introduction
+Complete the script for the SARscape-runner process of the land subsidence monitoring service development project.
+Since the current script is written based on Python, IDL, and Shell scripts and has been taken over in a non-working state, 
+the goal is to analyze the script and complete the function through modification, debugging, and additional creation.
 
 ---
 
