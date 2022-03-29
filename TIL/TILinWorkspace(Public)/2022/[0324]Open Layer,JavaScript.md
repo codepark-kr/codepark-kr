@@ -9,7 +9,8 @@
 ## Task
 * [x] 기존 4개 기능의 별도 버튼 표출 형식을 마우스 액션 방식으로 변경  
 * [x] 기존 조회 기간 설정 기능을 마우스 액션 방식으로 변경
-* [ ] 다각형 폴리곤 그리기 형식을 통한 지역 범위 선택 기능 추가
+* [x] searchModal의 포지셔닝 예외 처리 조건문 추가
+* [x] 다각형 폴리곤 그리기 형식을 통한 지역 범위 선택 기능 추가
 * [ ] 기타 사용자 UI/UX 개선
 * [ ] 동남아 지반침하 관련 기사 크롤링 후 표출 기능 및 페이지 개발
 * [ ] welcome 페이지 표출 기능 개발
@@ -121,6 +122,83 @@ class CustomControl extends ol.control.Control {
 
 완료 결과는 다음과 같다:  
 ![mouse-handling](../../../Assets/images/land-subsidence-mouse-handling.gif)
+
+---
+
+### Task #3
+신규 추가된 데이터 조회 기간 설정 및 장바구니 추가 modal은 사용자의 클릭 이벤트와 해당 커서의 클릭 위치에 따라
+포지셔닝이 결정된다. 단, 사용자가 화면 외곽에 가까운 위치에서 지역을 선택하는 경우 해당 modal이 사용자 화면의 client-width
+및 client-height을 넘어가는 경우가 존재할 수 있다. 이에 따라, 화면의 client-width/client-height에 따라 modal이 
+위치할 수 있는 포지션의 최대/최소값을 설정 후 이 값 내에서 위치되도록 별도의 예외 처리가 요구된다. 
+
+
+따라서, 해당 요소의 포지셔닝을 결정하는 함수 generateSearchModal을 다음과 같이 수정하였다:  
+
+```javascript
+const generateSearchModal=(e, parent)=>{
+    const searchModal = document.createElement('div');
+    let background = parent.parentElement;
+    let backgroundWidth = background.getBoundingClientRect().width;
+    let backgroundHeight = background.getBoundingClientRect().height;
+
+    if(e !== undefined){
+        searchModal.id = "searchModal";
+        if(e.clientX < 300) { searchModal.style.left = 20 + "px"; }
+        else if(e.clientX > (backgroundWidth - 300)) { searchModal.style.left = (backgroundWidth - 300) + "px"; }
+        else { searchModal.style.left = (e.clientX - 300)+ "px"; }
+
+        if(e.clientY < 240) { searchModal.style.top = 20 + "px"; }
+        else if(e.clientY > (backgroundHeight - 240)) { searchModal.style.top = (backgroundHeight - 240) + "px"; }
+        else { searchModal.style.top = (e.clientY) + "px"; }
+    }
+    return searchModal;
+}
+```
+
+완료 결과는 다음과 같다:  
+![modal-handling](../../../Assets/images/land-subsidence-modal-handling.gif)
+
+---
+
+### Task #4
+기존 직사각형의 polygon 지역 선택 방식에서 사용자 정의 polygon(다각형) 그리기를 통한 지역 선택 방식으로 변경한다.  
+
+```javascript
+const createInteraction = (vectorLayer) => {
+    const value = 'Circle';
+    const draw = new ol.interaction.Draw({
+        source: vectorLayer.getSource(),
+        type: value, 
+        geometryFunction: ol.interaction.Draw.createBox(),
+    });
+    draw.on('drawstart', removePreviousDraw);
+    draw.set('id', 'drawPolygon');
+
+    removeDuplicateInteractionById('drawPolygon');
+    map.addInteraction(draw);
+}
+```
+변경은 매우 쉽다. 위의 코드를 다음과 같이 변경해 준다:   
+변경점은 `const value`의 값, 그리고 `geometryFunction`의 제거 단 둘 뿐이다.  
+
+```javascript
+const createInteraction = (vectorLayer) => {
+    const value = 'Polygon';
+    const draw = new ol.interaction.Draw({
+        source: vectorLayer.getSource(),
+        type: value
+    });
+    draw.on('drawstart', removePreviousDraw);
+    draw.set('id', 'drawPolygon');
+
+    removeDuplicateInteractionById('drawPolygon');
+    map.addInteraction(draw);
+}
+```
+
+완료 결과는 다음과 같다:  
+![](../../../Assets/images/land-subsidence-polygon.gif)
+
 
 ---
 
