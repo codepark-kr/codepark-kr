@@ -1,8 +1,8 @@
-## Open Layer, JavaScript
+## Open Layers, JavaScript
 `2022.03.25. - `
 
 ## Introduction
-지반침하 모니터링 서비스 개발 프로젝트의 geoserver, open layer, bing map을 통한 Polygon 지역 범위 및 기간 선택의 UI/UX를 고도화하고, 사용자 편의를 개선하는 신규 기능을 추가한다.
+지반침하 모니터링 서비스 개발 프로젝트의 geoserver, Open Layers, bing map을 통한 Polygon 지역 범위 및 기간 선택의 UI/UX를 고도화하고, 사용자 편의를 개선하는 신규 기능을 추가한다.
 
 ---
 
@@ -24,7 +24,7 @@
 Open Layer, JavaScript(ES6) 기반 지반침하 모니터링 데이터 조회를 위한 map 핸들링 기능을
 기존 별도의 버튼 형식 표출에서 마우스 핸들링 기반으로 개선한다.  
 
-팀원이 작성한 기존의 방식은 다음과 같이 class CustomControl을 별도로 선언 후, Open Layer의 control.Control을 상속한 constructor 내에서 
+팀원이 작성한 기존의 방식은 다음과 같이 class CustomControl을 별도로 선언 후, Open Layers의 control.Control을 상속한 constructor 내에서 
 신규 div(custom-map-control ol-unselectable ol-control)및 map 핸들링을 위한 버튼을 createElement를 통해 생성하고,
 click event를 각 버튼에 바인딩한 후  appendChild를 통해 자식 요소를 붙여주는 형식이다:
 
@@ -60,8 +60,8 @@ class CustomControl extends ol.control.Control {
 4. 기존 별도의 버튼 형식으로 지원되던 map 핸들링 UI는 삭제한다.
 
 이에 따라, 기존 코드를 다음과 같이 변경한다:  
-1. Open Layer를 통해 생성되는 canvas 전 영역이 클릭 이벤트 대상이므로 `document.onmouseenter` 함수를 작성한다.
-2. 1의 mouseenter 이벤트가 활성화되면 open layer interaction을 생성한다.
+1. Open Layers를 통해 생성되는 canvas 전 영역이 클릭 이벤트 대상이므로 `document.onmouseenter` 함수를 작성한다.
+2. 1의 mouseenter 이벤트가 활성화되면 Open Layers interaction을 생성한다.
 3. 영역 선택 후 표출될 searchModal div를 생성하고, 기존 데이터 조회 버튼 및 조회 기간 설정 input을 append 한다.
 4. searchModal의 position은 click eventdml clientX, clientY로 설정한다.
 5. 선택 영역이 없는 경우 3의 searchModal을 removeChild()로 제거 처리한다.
