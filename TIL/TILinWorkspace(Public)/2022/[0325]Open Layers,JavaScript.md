@@ -220,7 +220,7 @@ const createInteraction = (vectorLayer) => {
 
 ## Reference
 
-
 [Mozilla - web docs : Node.parentElement](https://developer.mozilla.org/en-US/docs/Web/API/Node/parentElement)  
 [Open Layers Polygon feature example](https://plnkr.co/edit/iI92XbxVDAg97MNQt5JV?p=preview&preview)  
+
 ---
