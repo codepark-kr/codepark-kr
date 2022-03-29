@@ -61,7 +61,7 @@ class CustomControl extends ol.control.Control {
 
 이에 따라, 기존 코드를 다음과 같이 변경한다:  
 1. Open Layer를 통해 생성되는 canvas 전 영역이 클릭 이벤트 대상이므로 `document.onmouseenter` 함수를 작성한다.
-2. 1의 mouseenter 이벤트가 활성화되면 open layer interaction을 생성한다.¹
+2. 1의 mouseenter 이벤트가 활성화되면 open layer interaction을 생성한다.
 3. 영역 선택 후 표출될 searchModal div를 생성하고, 기존 데이터 조회 버튼 및 조회 기간 설정 input을 append 한다.
 4. searchModal의 position은 click eventdml clientX, clientY로 설정한다.
 5. 선택 영역이 없는 경우 3의 searchModal을 removeChild()로 제거 처리한다.
@@ -221,6 +221,6 @@ const createInteraction = (vectorLayer) => {
 ## Reference
 
 
-[reference-image](reference-image)  
-
+[Mozilla - web docs : Node.parentElement](https://developer.mozilla.org/en-US/docs/Web/API/Node/parentElement)  
+[Open Layers Polygon feature example](https://plnkr.co/edit/iI92XbxVDAg97MNQt5JV?p=preview&preview)  
 ---
