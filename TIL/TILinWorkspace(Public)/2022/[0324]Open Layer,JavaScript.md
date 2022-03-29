@@ -121,6 +121,7 @@ class CustomControl extends ol.control.Control {
 
 완료 결과는 다음과 같다:  
 ![mouse-handling](../../../Assets/images/land-subsidence-mouse-handling.gif)
+
 ---
 
 ## Issues & Problem solving
