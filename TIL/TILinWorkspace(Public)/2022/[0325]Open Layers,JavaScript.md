@@ -11,7 +11,7 @@
 * [x] 기존 조회 기간 설정 기능을 마우스 액션 방식으로 변경
 * [x] searchModal의 포지셔닝 예외 처리 조건문 추가
 * [x] 다각형 폴리곤 그리기 형식을 통한 지역 범위 선택 기능 추가
-* [ ] 기타 사용자 UI/UX 개선
+* [x] 장바구니 내 항목 삭제, 삭제 이전 다국어-alert 표출 기능 개발
 * [ ] 동남아 지반침하 관련 기사 크롤링 후 표출 기능 및 페이지 개발
 * [ ] welcome 페이지 표출 기능 개발
 * [ ] 완료 보고
@@ -121,6 +121,7 @@ class CustomControl extends ol.control.Control {
 ```
 
 완료 결과는 다음과 같다:  
+
 ![mouse-handling](../../../Assets/images/land-subsidence-mouse-handling.gif)
 
 ---
@@ -156,6 +157,7 @@ const generateSearchModal=(e, parent)=>{
 ```
 
 완료 결과는 다음과 같다:  
+
 ![modal-handling](../../../Assets/images/land-subsidence-modal-handling.gif)
 
 ---
@@ -197,7 +199,84 @@ const createInteraction = (vectorLayer) => {
 ```
 
 완료 결과는 다음과 같다:  
+
 ![](../../../Assets/images/land-subsidence-polygon.gif)
+
+---
+
+### Task #5
+장바구니 내 항목 삭제 기능을 신규로 개발하고, 삭제 기능을 실행하기 전 사용자에게 다국어 지원을 추가한 alert를 띄우도록 한다.  
+장바구니 내 항목은 cookie를 통해 저장되어 있으며, 장바구니 화면 표출 시 각 항목에 대응되는 쿠키의 값을 가져와 표출하고 있다.  
+알림은 웹 페이지 내 범용적으로 사용되고 있는 SweetAlert2로 작성한다.
+
+작성 된 코드는 다음과 같다:  
+
+```javascript
+let localizationLanguages = alertLanguage;
+
+const deleteSelectedInCart=()=>{
+    let lang = getCookieValue("lang");
+    
+    swal.fire({
+        text: localizationLanguages[lang]['would delete'],
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: localizationLanguages[lang]['yes'],
+        cancelButtonText: localizationLanguages[lang]['no'],
+        confirmButtonColor: '#f27474',
+    }).then((res)=>{
+        if(res.isConfirmed) {
+            removeCookies();
+            document.location.reload(true);
+        }
+    });
+
+    const targetCookieNames =
+        ["userId", "polygon", "startDate", "endDate", "cost", "coordinates", "locationName"];
+
+    removeCookies=()=>{
+        for(let i = 0; i < targetCookieNames.length; i++ ){
+            if(targetCookieNames[i] != null){
+                removeCookie(targetCookieNames[i]);
+            }
+        }
+    }
+}
+```
+
+1. 쿠키 삭제는 `removeCookies()` 함수를 통해 실행된다. 대상이 되는 쿠키의 명칭들을 배열로 선언하고, 선언된
+쿠키들을 반복문을 통해 지우는 방식이다. 단, 해당되는 쿠키가 존재하는 경우에만 삭제를 진행한다.  
+
+2. 알림은 swal(SweetAlert2)를 통해 실행되고, HTML 내 신규 추가한 버튼의 onclick 이벤트로 실행된다. 즉, 사용자가
+항목 삭제 버튼을 클릭하면 알림을 먼저 띄운 후, response(`res`)가 confirmed인 경우에만 쿠키 삭제를 실행한다. 
+사용자가 삭제 버튼을 잘못 눌렀거나, 삭제 의사를 취소하는 경우가 발생할 수 있으므로 해당 알림창은 confirm/cancel 
+두 가지 버튼을 포함하도록 한다. 또한, 삭제가 완료되면 장바구니 페이지를 한 번 새로고침 하여 장바구니 내 항목이
+삭제되었음을 사용자가 바로 확인할 수 있도록 한다.   
+
+3. 알림창의 다국어 지원은 별도의 js 파일로 작성한 `const alertLanguage@language.js` 의 함수에 의해 각 언어별 
+올바른 문구가 대입되도록 한다. 사용자의 언어 판별 여부는 마찬가지로 쿠키 `lang`(kr, en, vi) 항목으로 대입되어 있다.  
+`language.js` 파일에서의 `const alertLanguage` 구조는 다음과 같다:  
+
+```javascript
+const alertLanguage={
+    'en': {
+        'yes': 'Yes',
+        'no' : 'No'
+    },
+    'ko': {
+        'yes': '네',
+        'no' : '아니오'
+    },
+    'vi': {
+        'yes': 'Vâng',
+        'no' : 'Dạ không'
+    }
+}
+```
+
+완료 결과는 다음과 같다:  
+
+![](../../../Assets/images/land-subsidence-delete.gif)
 
 
 ---
