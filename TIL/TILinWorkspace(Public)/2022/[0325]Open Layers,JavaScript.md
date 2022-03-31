@@ -1,5 +1,5 @@
 ## Open Layers, JavaScript
-`2022.03.25. - `
+`2022.03.25. - 2022.03.29.`
 
 ## Introduction
 지반침하 모니터링 서비스 개발 프로젝트의 geoserver, Open Layers, bing map을 통한 Polygon 지역 범위 및 기간 선택의 UI/UX를 고도화하고, 사용자 편의를 개선하는 신규 기능을 추가한다.
@@ -12,9 +12,6 @@
 * [x] searchModal의 포지셔닝 예외 처리 조건문 추가
 * [x] 다각형 폴리곤 그리기 형식을 통한 지역 범위 선택 기능 추가
 * [x] 장바구니 내 항목 삭제, 삭제 이전 다국어-alert 표출 기능 개발
-* [ ] 동남아 지반침하 관련 기사 크롤링 후 표출 기능 및 페이지 개발
-* [ ] welcome 페이지 표출 기능 개발
-* [ ] 완료 보고
 
 ---
 
@@ -278,22 +275,9 @@ const alertLanguage={
 
 ![](../../../Assets/images/land-subsidence-delete.gif)
 
-
----
-
-## Issues & Problem solving
-### Title
-> ![problem image](problem image)
->
-> **Problem:**   
-> **Solution:**   
->
-> ![solved image](solved image)
-
 ---
 
 ## Remark
-
 
 ---
 
