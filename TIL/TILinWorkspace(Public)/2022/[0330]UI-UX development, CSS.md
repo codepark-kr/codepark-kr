@@ -21,14 +21,17 @@
 ```html
 <html>
     <head>
-        <style> 
+        <style>
             :root {
-            --navy: #0b0b45;
-            --deep-dark: #181a19;
-            --dark: #222423;
-            --medium: #757164;
-            --light: #9b9b98;
-            --super-light: #fbfbf8;
+                --magenta: #aa0144;
+                --teal: #045d5d;
+                --golden: #df7701;
+                --navy: #0b0b45;
+                --deep-dark: #181a19;
+                --dark: #222423;
+                --medium: #757164;
+                --light: #9b9b98;
+                --super-light: #fbfbf8;
             }
 
             body { background-color: var(--dark); padding: 2rem; }
@@ -99,6 +102,9 @@ a:hover p { display: block; }
 이렇게 작성하면, 나중에 디자인이 변경되어도 root에 선언한 저 hex 코드의 값만 바꾸면 마술처럼 모든 대입처에 적용된다.  
 ```css
 :root {
+    --magenta: #aa0144;
+    --teal: #045d5d;
+    --golden: #df7701;
     --navy: #0b0b45;
     --deep-dark: #181a19;
     --dark: #222423;
@@ -119,8 +125,8 @@ a:hover p { display: block; }
 ![](../../../Assets/images/welcome.png)
 
 완료 결과는 다음과 같다:  
-![](../../../Assets/images/compare-webd.png)
-![](../../../Assets/images/demo-dark.gif)  
+![](../../../Assets/images/compare-webd.png)  
+![](../../../Assets/images/change-colors-badge.gif)
 
 ---
 
