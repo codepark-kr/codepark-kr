@@ -9,7 +9,7 @@
 ## Task
 * [x] HikariCP Connection Timeout 원인 파악
 * [x] SSE Emitter의 발송 완료/에러 발생한 emit close 처리
-* [ ] JPA 로직 전반 불필요한 트랜젝션 발생 로직 리팩토링
+* [x] JPA 로직 전반 불필요한 트랜젝션 발생 로직 리팩토링
 ---
 
 ## Details
@@ -98,8 +98,84 @@ spring.datasource.hikari.maximum-pool-size=1
 
 ---
 
-### Task #2
+### Task #3
+과도한 트랜젝션의 발생 원인을 파헤치는 과정에서, SSE 자원 반납 이슈 외에도 일부 JPA 로직이 불필요한 트랜젝션을 발생시키고 있음을 확인하였다.   
+이를테면, 이런 경우이다 :   
 
+**Controller**
+```java
+@RequestMapping("/")
+public String index(
+        Model model, @CurrentUser UserPrincipal currentUser, 
+        HttpServletRequest httpRequest, HttpServletResponse response,
+        @RequestParam(value = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+        @RequestParam(value = "size", required = false, defaultValue = "3") Integer size
+    ) {
+    if(currentUser != null){ // 이 조건문 내 로직에 주목하세요
+        Long userId = userRepository.getUserByEmail(currentUser.getEmail()).getId();
+        createCookie(response, "userId", userId.toString());
+        model.addAttribute("allPaidData", paidDataService.getAllPaidDataByUserEmail(currentUser.getEmail(), page, size));
+    }
+    return dependOnIsVisitedWelcome(currentUser, httpRequest);
+}
+```
+
+
+**ServiceImpl**
+```java
+@Override
+public Page<PaidData> getAllPaidDataByUserEmail(String email, int page, int size) {
+    pageValidation(page, size);
+    User user = userRepository.getUserByEmail(email);
+    return paidDataRepository.findAllByUserId(user.getId(), sortDescending(page, size));
+}
+```
+
+어떤 문제가 있는지 확인했는가?   
+우선 index 페이지의 전반적인 플로우는 다음과 같다 :  
+
+1. index 페이지에 접속한 사용자가 회원인지, 비회원인지 분간한다 : `if(currentUser != null)`
+2. **회원인 경우**, custom user Principal인 **@CurrentUser로부터 이메일을 가져와서 회원 id를 조회한다.** (트랜젝션 발생)
+3. 가져온 id로 해당 회원이 결제된 데이터(PaidData)를 가지고 있는지 조회하기 위해 **email을 인자로 던진다.** 
+4. **인자로 받은 email로 회원 조회를 또 한다!** (트랜젝션 발생)
+5. 3-2에서 **조회된 회원의 아이디로** 결제 내역을 조회해서 리턴한다. (트랜젝션 발생)
+
+이미 로그인 중인 회원의 결제 내역을 조회하는 데에만 트랜젝션이 3번이나 발생한다!  
+
+위의 플로우는 다음과 같이 축약할 수 있을 것이다 :  
+1. index 페이지에 접속한 사용자가 회원인지, 비회원인지 분간한다.
+2. 회원인 경우, @CurrentUser로부터 이메일을 가져와서 결제내역 조회 로직으로 던진다.
+3. **받은 이메일로 결제 내역을 조회해서 리턴한다.** (트랜젝션 발생)
+
+위의 플로우로 리팩토링한다면 트랜젝션은 단 1번이면 된다.  
+즉, 코드는 이렇게 변경되어야 할 것이다 :  
+
+**Controller**  
+```java
+@RequestMapping("/")
+public String index(
+        Model model, @CurrentUser UserPrincipal currentUser,
+        HttpServletRequest httpRequest, HttpServletResponse response,
+        @RequestParam(value = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+        @RequestParam(value = "size", required = false, defaultValue = "3") Integer size
+        ) {
+    if(currentUser != null){
+        long userId = currentUser.getId();
+        createCookie(response, "userId", String.valueOf(userId));
+        model.addAttribute("allPaidData", paidDataService.getAllPaidDataByUserId(userId, page, size));
+    }
+    return dependOnIsVisitedWelcome(currentUser, httpRequest);
+}
+```
+
+**ServiceImpl**  
+```java
+@Override
+public Page<PaidData> getAllPaidDataByUserId(long id, int page, int size) {
+    pageValidation(page, size);
+    return paidDataRepository.findAllByUserId(id, sortDescending(page, size));
+}
+```
 
 
 ---
