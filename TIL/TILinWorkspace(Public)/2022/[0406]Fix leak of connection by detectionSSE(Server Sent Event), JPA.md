@@ -8,13 +8,12 @@
 
 ## Task
 * [x] HikariCP Connection Timeout 원인 파악
-* [ ] SSE Emitter의 발송 완료된 emit close 처리
-* [ ] SSE Emitter 초기화 구문 extracted method로 분리
+* [x] SSE Emitter의 발송 완료/에러 발생한 emit close 처리
 * [ ] JPA 로직 전반 불필요한 트랜젝션 발생 로직 리팩토링
 ---
 
 ## Details
-### Task #1
+### Task #1, #2
 프로젝트에 주기적으로 HikariCP Connection Timeout이 발생하는 것을 확인하였다.  
 먼저, 해당 이슈의 원인을 파악하도록 한다.
 
