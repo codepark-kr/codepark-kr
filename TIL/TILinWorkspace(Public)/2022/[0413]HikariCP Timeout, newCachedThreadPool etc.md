@@ -112,7 +112,6 @@ thread를 새로 생성하기 때문에 서버가 자주 로드되어 많은 작
 ```java
 private final ExecutorService executor = Executors.newCachedThreadPool();
 
-
 @GetMapping(value = "/notification", produces = "text/event-stream")
 public ResponseEntity<SseEmitter> doNotify(
         HttpServletRequest httpRequest, StatusChangeRequest request) throws Exception{
