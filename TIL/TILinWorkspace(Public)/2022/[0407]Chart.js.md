@@ -454,4 +454,5 @@ const generateChart = (ctx) => {
 ## Reference
 [CodePen Home Chart.js Annotations BarChart](https://codepen.io/k3no/pen/yaGGGW?editors=0010)  
 [Chart.js how to get Combined Bar and line charts?](https://stackoverflow.com/questions/25811425/chart-js-how-to-get-combined-bar-and-line-charts)
+
 ---
