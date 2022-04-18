@@ -248,6 +248,8 @@ public String login(@Valid @ModelAttribute LoginRequest loginRequest) {
 문제의 원인은 아주 단순했지만, jar 파일의 기본 classpath prefix 설정에 대한 부분을 새롭게 알게 되어 좋은 공부가 되었다.
 
 ## Remark
+Task #4의 newCachedThreadPool 이슈는 Joshua Bloch의 Chapter 10, 항목 68의 Effective Java, 2nd Edition에도 언급이 되어있다고 한다.  
+마침 요즘 출퇴근 하면서 Effective Java를 읽고 있는 중이니, 해당 항목을 찾아서 한 번 읽어보자.
 
 ---
 
