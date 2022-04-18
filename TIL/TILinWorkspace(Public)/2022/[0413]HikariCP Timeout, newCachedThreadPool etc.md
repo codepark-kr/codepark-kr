@@ -161,8 +161,12 @@ public ResponseEntity<SseEmitter> doNotify(
 HikariCP는 `maxLifetime`에 도달한 connection의 연결을 끊고 새로운 connection을 생성하는 방식이다. 
 그리고 MySQL은 기본적으로 자신에게 맺어진 connection 중 일정 시간 이상 사용하지 않은 connection을 종료하는 프로세스가 존재한다.
 HikariCP의 `maxLifetime`이 MySQL의 `wait_timeout`보다 짧다면 이러한 문제는 발생하지 않으며, 
-단! Hikari-CP의 maxLifetime은 "사용하지 않는" connection으로 한정된다.
+단! Hikari-CP의 maxLifetime은 "사용하지 않는" connection으로 한정된다. 
+때문에, 누락된 자원 반납 코드 등을 추가한 것은 올바른 선택이였다. 
+사용한 자원을 반납하지 않으면 해당 conenction은 유후상태가 아닌 사용 중인, 즉 active한 상태인 것으로 판별되기 때문에 
+connection은 자동으로 회수되지 않고, 이미 맺어진 connection이 대기 중인 상태로 머무르게 되면서 maxLifetime을 적용받지 못하기 때문이다.  
 
+그러나 누락된 자원 반납 등을 추가하였음에도 불가하고 해당 이슈는 계속 발생했다.
 기본적으로는 **MySQL의 wait_timeout의 기본 값은 default 28800 seconds / 8시간**, 
 **HikariCP의 기본 값은 600000 milliseconds / 10분**으로 
 기본 설정값 기준 이러한 문제가 발생하지 않는 것이 정상이다.
