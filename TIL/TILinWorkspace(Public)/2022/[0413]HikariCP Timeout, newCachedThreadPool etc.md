@@ -121,8 +121,7 @@ public ResponseEntity<SseEmitter> doNotify(
 ```
 
 이에 따라,`newCachedThreadPool`을 `newSingleThreadPool`로 변경하고, SseEmitter의 timeout 설정을 
-`Long.MAX_VALUE`로 설정하여 해당 이슈를 피하도록 했다.  
-수정 후 각 SSE 발송 구문이 요청당 1횠기 수행되고 있음을 확인할 수 있었다.  
+`Long.MAX_VALUE`로 설정하여 해당 이슈를 피하도록 했다. 수정 후 각 SSE 발송 구문이 요청당 1회씩 수행되고 있음을 확인할 수 있었다.  
 
 변경된 코드는 다음과 같다:  
 ```java
