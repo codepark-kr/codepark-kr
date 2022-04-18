@@ -11,7 +11,7 @@
 * [x] 결제 내역 상태 변경 시 NullPointerException 발생 이슈 해결
 * [x] footer 포지셔닝 이슈 해결
 * [x] newCachedThreadPool 이슈 해결
-* [x] Hikari-CP pool-size 이슈 해결
+* [x] Hikari-CP + MySQL 이슈 해결
 * [x] 배포시 페이지 매핑 불가능한 이슈 해결
 
 ---
@@ -143,7 +143,7 @@ public ResponseEntity<SseEmitter> doNotify(
 ---
 
 ### Task #5
-**Hikari-CP timeout : pool-size 이슈 해결**  
+**Hikari-CP timeout + MySQL 이슈 해결**  
 로컬 서버, 실 서버 양측에서 간헐적으로 발생하는 Hikari-CP 이슈로 인해 약 2주 간을 팀원과 함께 삽질해 왔다. 
 우선 해결을 위해 시도해 보았던 것들은 다음과 같았다:  
 1. Hikari-CP timeout 이슈가 발생하는 connection 누수 지점의 확인
