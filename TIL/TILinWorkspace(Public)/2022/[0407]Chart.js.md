@@ -91,6 +91,7 @@ margin-left: calc(사용자 화면의 1/2 너비 - (차트 너비 / 2));
 ---
 
 ### Task #2
+**2-1. 차트 영역 내 차트 닫기 버튼, 제목 요소 추가**  
 차트 닫기, 제목 요소, 컬러링 범주 표시 추가는 다음과 같이 진행된다:  
 Task #1에서 상기했듯 차트의 표출 처리는 outer-wrapper div에 append 형식으로 진행되므로, 이와 반대인 숨김 처리는 outer-wrapper div에서 
 해당 차트를 remove 해 주면 된다. 즉, 차트 닫기 버튼을 생성하고 inner-wrapper div에 버튼 요소를 append 한 후, onclick 이벤트를 붙여 
@@ -135,6 +136,8 @@ closeChart=()=>{
 <p class="chart-title" id="chartTitle" th:text="#{chart-title}"></p>
 ```
 
+
+**2-2. 화면 내 컬러링 범주(Gradient-bar) 표기 요소 추가**  
 컬러링 범주 표시는 다음과 같이 작성한다:  
 
 ```html
@@ -153,6 +156,11 @@ closeChart=()=>{
         <div class="gradient-bar"></div>
     </div>
 ```
+
+실제 컬러링 범주 색상이 대입되는 곳은 class gradient-bar에 해당된다. background 색상을 linear-gradient로 
+작성하면 간편하게 하나의 div 내에 복수의 색상을 표시할 수 있다. 값에 해당하는 부분은 복수의 span으로 작성하고,
+margin을 주면 각 span 사이의 공통 간격을 설정할 수 있다.
+
 
 ```css
 #color-gradient {
@@ -195,18 +203,22 @@ closeChart=()=>{
 }
 ```
 
+만들어진 gradient bar는 다음과 같다:  
+![](../../../Assets/images/gradient-bar.png)
 
 ---
 
 ### Task #3
+**3-1. 신규 데이터 로드 시 기존 데이터 차트 제거 처리**  
 Task #2에서 작성한 방식으로는 사용자가 버튼을 클릭하거나 창을 새로고침 하는 경우에만 차트가 삭제되어, 사용자가 주문 목록에서 또 다른 결과 데이터를
 클릭하는 경우에는 이 전에 표출된 차트가 잔류하는 이슈가 존재한다. 이에 따라, 신규 데이터를 로드하는 시점에서 차트를 제거하도록 한다.  
 
 ```js
 const loadGeoserverLayerByUUID = (uuid) => {
-    // 결과값(feature dataset) 호출 전에 차트 요소를 먼저 제거한다.
+    // 결과값(feature dataset) 호출 전에 차트 요소를 먼저 제거한다.*
     document.getElementById("innerChartWrapper").classList.remove("outer-chart-wrapper"); 
     ...
+    // wfs API로부터 신규 geoserver feature dataset 데이터를 로드한다.
     getFeatureDataset(geoserverWorkspaceName, uuid);
 };
 
@@ -235,9 +247,6 @@ const getFeatureDataset = ( geoserverWorkspaceName, uuid ) => {
         })
 }
 ```
-
-![](../../../Assets/images/gradient-bar.png)  
-그럼 이런 모양으로 만들어 진다.
 
 ---
 
@@ -293,7 +302,8 @@ const generateChart = (ctx) => {
 }
 ```
 
-다음과 같이 바꿔준다:  
+이를 아래와 같이 바꿔준다:  
+설명을 위해 data(dataset)과 options 파트를 쪼개보았다. 실제로도 options는 별도의 변수로 선언 후 호출하는 것이 낫다.  
 
 ```js
 const magenta = "#aa0144";
@@ -323,7 +333,22 @@ const generateChart = (ctx) => {
         options: options
     });
 };
+```
 
+선언된 `backgroundColor`는 차트 영역의 배경화면 색상이 아니라, bar 그래프의 배경 색상을 뜻한다. 
+이는 callback 함수를 대입해서 조건부 색상을 대입하거나 복수의 색상을 설정하는 것도 가능하다. 위 경우는
+0을 기준으로 0 미만(지반의 침하) / 0 이상 (지반의 상승) 2가지 지표로써 직관적인 판별이 가능하도록 색상을 대입해야 하므로
+위와 같이 삼항연산자로 값을 대입하도록 한다.
+
+
+다음은 options 설정이다. 팀원이 작성한 기존 내용과 크게 다르지는 않지만, 
+[chartjs-plugin-annotation](https://github.com/chartjs/chartjs-plugin-annotation) 라이브러리를 사용해서 
+x-axis 0 라인에 별도의 색상을 대입해 아래와 같이 0을 기준으로 값을 보다 쉽게 분간할 수 있게 했다.  
+
+![](../../../Assets/images/x-axis-example.png)  
+
+
+```js
 const options = {
     responsive: true,
     responsiveAnimationDuration: 1000,
@@ -369,21 +394,6 @@ const options = {
     }
 };
 ```
-![](../../../Assets/images/x-axis-example.png)  
-
-괄목할 부분은 크게 2곳으로, x-axis의 값이 0인 라인의 색상을 위의 이미지와 같이 설정하는 부분이다.    
-라이브러리 [chartjs-plugin-annotation](https://github.com/chartjs/chartjs-plugin-annotation)를 사용해서
-`options.annotation`에 해당하는 부분을 작성하면 된다.  
-
-또한 조건부 색상 변경의 경우는, 아래와 같이 callback 함수를 작성해서 필요한 요소에 대입한다.
-
-```js
-              backgroundColor: function(context) {
-                    const index = context.dataIndex;
-                    const value = context.dataset.data[index];
-                    return value < 0 ? magenta : teal;
-                },
-```
 
 완료 결과는 다음과 같다:  
 ![](../../../Assets/images/chart-effect.gif)
@@ -391,6 +401,7 @@ const options = {
 ---
 
 ### Task #5
+**5-1. bar + line combo로 차트 타입을 변경**  
 마지막으로, bar 타입으로 변경한 차트를 bar + line combo로 변경하는 경우는 다음과 같이 선언한다.  
 하다 주의할 점은, 각 dataset의 선언 순서에 따라 차트 내 z-index(order)의 차이가 발생하는데, 먼저 선언된 dataset이 
 보다 높은 order를 가지게 된다.  
@@ -429,56 +440,8 @@ const generateChart = (ctx) => {
         options: options
     });
 }
-
-const options = {
-    responsive: true,
-    responsiveAnimationDuration: 1000,
-    animation: {
-        easeInOutBack: function (x, t, b, c, d, s) {
-            if (s === undefined) s = 1.70158;
-            if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
-            return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
-        }
-    },
-    legend: {
-        display: false,
-    },
-    scales: {
-        xAxes: [{
-            ticks: {
-                beginAtZero: true,
-                userCallback: function (value) {
-                    if( value === undefined || value === null ) { return 'empty'; }
-                    return `${value.substring(2, 8)}`;
-                },
-            }
-        }],
-        yAxes: [{
-            ticks: {
-                beginAtZero: true,
-                userCallback: function (value) {
-                    return value+"mm ";
-                }
-            },
-            gridLines: {
-                color: medium
-            }
-        }],
-    },
-    annotation: {
-        annotations: [{
-            type: 'line',
-            mode: 'horizontal',
-            scaleID: 'y-axis-0',
-            value: '0',
-            borderColor: golden,
-            borderWidth: 1
-        }],
-        drawTime: "afterDraw"
-    }
-}
-
 ```
+
 최종 완료 결과는 다음과 같다:  
 
 ![](../../../Assets/images/chart-after.gif)
@@ -489,5 +452,6 @@ const options = {
 ---
 
 ## Reference
-
+[CodePen Home Chart.js Annotations BarChart](https://codepen.io/k3no/pen/yaGGGW?editors=0010)  
+[Chart.js how to get Combined Bar and line charts?](https://stackoverflow.com/questions/25811425/chart-js-how-to-get-combined-bar-and-line-charts)
 ---
