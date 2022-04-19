@@ -12,7 +12,7 @@
 
 <h3 align="center">Stats</h3>
 <p align="center">
-  <image src="https://github-profile-trophy.vercel.app/?username=codepark-kr&theme=onestar&row=1&column=4" alt="trophies"></image>
+  <image src="https://github-profile-trophy.vercel.app/?username=codepark-kr&theme=onestar&row=1&column=5" alt="trophies"></image>
 </p>
 
 <p align="center">
