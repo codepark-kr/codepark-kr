@@ -1,4 +1,4 @@
-## UI-UX Development(2), Open Layers
+## 쿠키를 통한 페이지 매핑 핸들링, OpenLayers 기능 추가
 `2022.04.04. - 2022.04.05.`
 
 ## Introduction

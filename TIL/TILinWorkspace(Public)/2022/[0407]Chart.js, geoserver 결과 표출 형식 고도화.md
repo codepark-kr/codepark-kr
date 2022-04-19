@@ -1,4 +1,4 @@
-## Chart.js 결과 표출 차트 고도화
+## Chart.js, geoserver 결과 표출 형식 고도화
 `2022.04.07. - 2022.04.11.`
 
 ## Introduction

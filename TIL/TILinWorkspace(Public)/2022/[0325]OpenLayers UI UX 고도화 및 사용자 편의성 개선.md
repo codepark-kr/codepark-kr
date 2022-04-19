@@ -1,8 +1,9 @@
-## Open Layers, JavaScript
+## OpenLayers UI/UX 고도화 및 사용자 편의성 개선
 `2022.03.25. - 2022.03.29.`
 
 ## Introduction
-지반침하 모니터링 서비스 개발 프로젝트의 geoserver, Open Layers, bing map을 통한 Polygon 지역 범위 및 기간 선택의 UI/UX를 고도화하고, 사용자 편의를 개선하는 신규 기능을 추가한다.
+지반침하 모니터링 서비스 개발 프로젝트의 geoserver, Open Layers, bing map을 통한 Polygon 지역 범위 및 기간 선택의 UI/UX를 고도화하고, 
+사용자 편의를 개선하는 신규 기능을 추가한다.
 
 ---
 

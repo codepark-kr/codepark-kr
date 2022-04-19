@@ -1,4 +1,4 @@
-## SSE(Server Sent Event), JPA
+## SSE(Server Sent Event) connection 누수, JPA 리팩토링
 `2022.04.06. -`
 
 ## Introduction
