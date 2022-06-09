@@ -9,7 +9,7 @@
 ## Task
 * [x] Keycloak 기본 설정
 * [x] LDAP + Keycloak
-* [ ] RSA, SSL 설정
+* [ ] RSA, phpldapadmin 설정
 
 ---
 
@@ -177,7 +177,7 @@ servers->setValue('login','anon_bind',false);
 
 ---
 
-### Task #3: OpenVPN + LDAP  
+### Task #3: RSA + phpldapadmin
 
 3-1. Install OpenVPN plugin for LDAP authentication  
 `sudo apt install openvpn-auth-ldap`    
@@ -232,8 +232,10 @@ ou: groups
 
 ## Remark
 
+
 ---
 
 ## Reference
+
 
 ---
