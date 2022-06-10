@@ -1,5 +1,6 @@
 <h3 align="center">Tech Stack</h3>
 <p align="center">
+  <image src="https://img.shields.io/badge/Salesforce-00A1E0.svg?style=flat&logo=salesforce&logoColor=white" alt="salesforce"></image>
   <image src="https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat&logo=java&logoColor=white" alt="java"></image>
   <image src="https://img.shields.io/badge/Spring-%236DB33F.svg?style=flat&logo=spring&logoColor=white" alt="spring"></image>
   <image src="https://img.shields.io/badge/JWT-black?style=flat&logo=JSON%20web%20tokens" alt="jwt"></image>
@@ -12,7 +13,8 @@
 
 <h3 align="center">Stats</h3>
 <p align="center">
-  <image src="https://github-profile-trophy.vercel.app/?username=codepark-kr&theme=onestar&row=1&column=5" alt="trophies"></image>
+  <image src="https://trailhead.salesforce.com/assets/ranks/scout-8730ae35d8d4abac0fa2d862388583cf72d6ae8623201c345e97e99c0a5afe35.png" alt="trailhead" style="width: 100px;"/>
+  <image src="https://github-profile-trophy.vercel.app/?username=codepark-kr&theme=onestar&row=1&column=5" alt="trophies"/>
 </p>
 
 <p align="center">
