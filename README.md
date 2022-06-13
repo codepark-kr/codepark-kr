@@ -21,7 +21,7 @@
   <image src="https://github-readme-stats.vercel.app/api?username=codepark-kr&show_icons=true&theme=dark&count_private=true" alt="stats" style="width: 420px;" />
   <image src="https://github-readme-stats.vercel.app/api/top-langs/?username=codepark-kr&layout=compact&hide=csharp&theme=dark" alt="top-langs" style="width: 351px;"/>
   <br/>
-Currently writing <a href="https://github.com/codepark-kr/codepark-kr"><strong>TIL, Personal Wiki</strong></a>
+Currently writing <a href="https://github.com/codepark-kr/codepark-kr/tree/main/TIL/TILinWorkspace(Public)/2022"><strong>TIL</strong></a>, <a href="https://github.com/codepark-kr/Salesforce-Study-2022"><strong>Salesforce Study<strong></a>
 <br/>
 contact : codepark.kr@gmail.com
   <br/>
