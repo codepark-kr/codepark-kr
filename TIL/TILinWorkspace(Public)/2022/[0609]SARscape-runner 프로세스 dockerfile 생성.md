@@ -27,25 +27,25 @@ repository에 dockerfile 작성 및 docker image를 생성한다.
 `tar -cvf [COMPRESSED-FILE-NAME.EXT] [TARGET-FOLDER-NAME]`  
 e.g. `tar -cvf sarscape-runner.tar LandSubsidence-sarscape-runner/`  
 
-![img.png](img.png)
+![img.png](../../../Assets/images/sarscape-runner-tar.png)
 
 
 ### 1-2. Copy file from ssh remote-server to local directory  
 `scp [ACCESS-ID]@[IPv4-ADDRESS]:[TARGET-FILE-PATH + FILE-NAME] [DESTINATION]`  
 e.g. `scp arirang@192.168.100.0:/data/arirang/subsidence/script/sarscape-runner.tar C:\Users\codep\Downloads`
 
-![img_1.png](img_1.png)
+![img_1.png](../../../Assets/images/scp-example.png)
 
 ### 1-3. Fix requirements.txt
 dockerfile을 작성하기 위해, 각 개별 커맨드를 직접 실행해 보고 모든 라인이 정상적으로 작동하는지 테스트 해 보았다.  
 아니나 다를까, `pip install -r requirements.txt` 라인에서 에러가 발생하는 것을 확인 할 수 있었다.  
 
-![img_3.png](img_3.png)  
+![img_3.png](../../../Assets/images/requirements-order-issues.png)  
 
 요약하면 의존성 fiona를 설치하기 위해 GDAL 변수를 필요로 하며 이 것을 찾을 수 없다는 이슈로 보이는데,  
 먼저 첫 번째 해결 방법으로 꼽히는 것은 아래와 같았다:  
 
-![img_2.png](img_2.png)
+![img_2.png](../../../Assets/images/requirements.png)
 
 (WIp)
 
