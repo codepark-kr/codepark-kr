@@ -65,7 +65,7 @@ http-port=5010
 1-8.	Build with postgres  
 `bin/kc.sh build --db postgres`  
 
-1-9.	Configure conection information with postgres  
+1-9.	Configure connection information with postgres  
 ```
 http-relative-path=/auth
 db=postgres
