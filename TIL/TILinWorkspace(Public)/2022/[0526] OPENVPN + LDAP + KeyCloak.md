@@ -225,7 +225,17 @@ ou: groups
 `sudo service apache2 start`  
 
 3-8. Check the phpldapadmin on http://localhost/phpldapadmin/
-![img_19.png](../../../Assets/images/img_19.png)  
+![img.png](../../../Assets/images/PHPLDAPADMIN.png)  
+
+3-9. Create new ou(Organization Units) in phpldapadmin  
+click to `Create new entry here` -> Select `Generic : Organization Unit`  
+
+![img_1.png](../../../Assets/images/new-organization-units.png)  
+Then fill up the form - Alias for new organization unit.  
+
+
+
+
 
 
 ---
