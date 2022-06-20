@@ -254,10 +254,12 @@ bash ssl.sh
 bash build.sh
 bash compose.sh
 ```
-result :  
+result(full logs) :  
 ![img_1.png](../../../Assets/images/build-with-bash.png)  
 ![img_2.png](../../../Assets/images/install-keycloak-with-bash.png)  
-
+![img.png](../../../Assets/images/keycloak-k8s-full-logs1.png)  
+![img_1.png](../../../Assets/images/keycloak-k8s-full-logs2.png)  
+![img_2.png](../../../Assets/images/keycloak-k8s-full-logs3.png)  
 ---
 
 ## Remark
