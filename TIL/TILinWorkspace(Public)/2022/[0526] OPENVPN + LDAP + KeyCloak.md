@@ -266,6 +266,13 @@ result :
 ---
 
 ## Reference
+[keycloak installation with docker - OFFICIAL](https://www.keycloak.org/docs/latest/server_installation/index.html#enabling-ssl-https-for-the-keycloak-server)  
+[maslick/keycloak-docker](https://github.com/maslick/keycloak-docker)  
+[Keycloak(User Federation) - LDAP 연계](https://hs-note.tistory.com/23)  
+[$'\r': command not found 쉘 실행 시 에러 나는 경우](https://isuetracker.tistory.com/770)  
+[Linux>기본명령어>sed](http://www.incodom.kr/Linux/%EA%B8%B0%EB%B3%B8%EB%AA%85%EB%A0%B9%EC%96%B4/sed)
+
+
 
 
 ---
