@@ -9,7 +9,7 @@
 ## Task
 * [x] Keycloak 기본 설정
 * [x] LDAP + Keycloak
-* [ ] RSA, phpldapadmin 설정
+* [ ] k8s + docker compose + keycloak 기초 설정
 
 ---
 
@@ -233,10 +233,30 @@ click to `Create new entry here` -> Select `Generic : Organization Unit`
 ![img_1.png](../../../Assets/images/new-organization-units.png)  
 Then fill up the form - Alias for new organization unit.  
 
+---
 
+### Task #3 k8s + docker compose + keycloak 기초 설정  
 
-
-
+1. Create new directory as tmp, clone the repository : keycloak-docker(unofficial)  
+```shell
+mkdir tmp
+git clone https://github.com/maslick/keycloak-docker
+```
+2.  Filter sh file with regex and transform for linux  
+```shell
+sed -i -e 's/\r$//' ssl.sh
+sed -i -e 's/\r$//' build.sh
+sed -i -e 's/\r$//' compose.sh
+```
+3. Installation : execute sh files with bash  
+```shell
+bash ssl.sh
+bash build.sh
+bash compose.sh
+```
+result :  
+![img_1.png](../../../Assets/images/build-with-bash.png)  
+![img_2.png](../../../Assets/images/install-keycloak-with-bash.png)  
 
 ---
 
