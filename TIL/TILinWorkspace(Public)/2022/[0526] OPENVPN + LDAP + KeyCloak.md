@@ -260,6 +260,54 @@ result(full logs) :
 ![img.png](../../../Assets/images/keycloak-k8s-full-logs1.png)  
 ![img_1.png](../../../Assets/images/keycloak-k8s-full-logs2.png)  
 ![img_2.png](../../../Assets/images/keycloak-k8s-full-logs3.png)  
+
+4. Run keycloak  
+Check out the default-server config, port number from `docker-compose.yml`
+![img_1.png](../../../Assets/images/docker-compose-config.png)  
+
+Access to keycloak console  
+path : `https://{localhost:port}/auth`  
+
+![img_3.png](../../../Assets/images/keycloak-with-k8s.png)
+*Default password admin:admin can be changed in docker-compose.yml: KEYCLOAK_USER, KEYCLOAK_PASSWORD*  
+
+5. Get free certificate from [SSL for free](https://www.sslforfree.com/)  
+Register first :  
+![img.png](../../../Assets/images/register-ssl-for-free.png)  
+
+Then Click to new Certificate(for 90-days)  
+![img_1.png](../../../Assets/images/new-certificate.png)
+get : 
+```shell
+* ca_bundle.crt (root and intermediate certificates)
+* certificate.crt (public key)
+* private.key (private key)
+```
+
+Create a java keystore (jks) from files acquired in step 1  
+```shell
+// combine letsencrypt certificate with the issued certificate
+cat certificate.crt ca_bundle.crt > fullchain.pem
+
+// convert to PKCS12 store
+openssl pkcs12 -export -in fullchain.pem -inkey private.key -name auth.maslick.com -out fullchain_plus_key.p12 -password pass:secret
+
+// convert to java keystore
+keytool -importkeystore -deststorepass secret -destkeypass secret -destkeystore keycloak.jks -srckeystore fullchain_plus_key.p12 -srcstoretype PKCS12 -srcstorepass secret
+```
+
+6. Install Openshift 
+```shell
+curl -L https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz | tar xvz --directory /tmp
+mv -v /tmp/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc /usr/local/bin/oc
+chmod +x /usr/local/bin/oc
+rm -rf /tmp/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit
+```
+![img_2.png](../../../Assets/images/install-openshift.png)  
+
+
+
+
 ---
 
 ## Remark
@@ -268,6 +316,8 @@ result(full logs) :
 ---
 
 ## Reference
+[Redhat OpenShift - Configuring project creation - OFFICIAL ](https://docs.openshift.com/container-platform/4.6/applications/projects/configuring-project-creation.html)  
+[Running Openshift 3.11 inside WSL2](https://gist.github.com/kekru/f14c0a5d05db4f2f1a3cd92bdaa6a4d0)  
 [keycloak installation with docker - OFFICIAL](https://www.keycloak.org/docs/latest/server_installation/index.html#enabling-ssl-https-for-the-keycloak-server)  
 [maslick/keycloak-docker](https://github.com/maslick/keycloak-docker)  
 [Keycloak(User Federation) - LDAP 연계](https://hs-note.tistory.com/23)  
