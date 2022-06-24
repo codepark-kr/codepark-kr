@@ -26,5 +26,6 @@ Currently writing <a href="https://github.com/codepark-kr/codepark-kr/tree/main/
 contact : codepark.kr@gmail.com
   <br/>
   <br/>
+  <img src="https://wakatime.com/badge/user/a9df169a-4a7f-4bba-8b96-91957aa839e4.svg" alt="waka-times"/>
   <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fcodepark-kr&count_bg=%23757164&title_bg=%231e1e1e&icon=ghostery.svg&icon_color=%23FFFFFF&title=hits&edge_flat=false" alt="hit counter"/>
 </p>
