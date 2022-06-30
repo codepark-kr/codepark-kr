@@ -85,27 +85,69 @@ public List<Long> findAllDirty() {
 
 ---
 
+### Task #2 복수의 시퀀스 결과값을 파싱한 후 파싱된 결과물을 파라미터로 전달하여 API를 호출하는 로직의 작성
+상기한 Task #1에서 `Collectors.toList()`를 통해 생성된 Long 타입의 배열의 내부 값 시퀀스를 하나씩 파라미터로 전달하기 위해, 
+다음과 같은 호출 로직을 우선적으로 작성한다 : 
 
+**Controller**  
+```java
+@PostMapping("/satellite/dirty")
+public void callApiForDirtyModels() {
+    satelliteService.findAllDirty().forEach(e -> satelliteService.callApi(e));
+}
+```
 
+stream + Collectors.toList()를 통해 List<Long>의 형식으로 필터링된 시퀀스를 담고 있는 배열을, 
+forEach(파싱된 각 내부 단수값 당 -> 실행 메소드(개별 내부 단수값 전달)); 의 형식으로 간단히 메소드를 호출할 수 있다.  
 
+여기서 호출될 실행 메소드란 바로 API 호출을 위한 Http 통신 구조일 것이다.  
+직접 코드를 작성하는 경우에는 1차적으로 다음과 같은 로직을 생성할 수 있겠다:  
 
+```java
+@Override
+public void callApi(Long sequence) {
+    try{
+        URL url = new URL("http://localhost:11000/api/call?sequence="+sequence.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        setConnectionProperty(conn, type);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        
+        bw.flush();
+        bw.close();
+        
+        int responseCode = conn.getResponseCode();
+        if(responseCode == 200) { log.info("The process has been succeeded. => " + sequence); }
+    } catch(Exception e) { log.error("Exception has been occurred : => " + e); }
+}
 
+public HttpURLConnection setConnectionProperty(HttpURLConnection conn, String type) {
+    try {
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Transfer-Encoding", "chunked");
+        conn.setRequestProperty("Connection", "keep-alive");
+        conn.setDoOutput(true);
+    } catch (ProtocolException e) {
+        log.error("ProtocolException has been occurred : " + e);
+    }
+    return conn;
+}
+```
 
+Request 타입에 대한 재사용 가능성이 없는 경우를 상정하고 POST 타입, no request body 형식으로 HTTP를 통해 
+API를 호출하는 형식의 기본 로직이다. 파싱된 미분석 모델(List<Long> sequences)을 전달할 실서버의 API가 개발되기 이전이므로, 
+우선 forEach 구문을 통해 전달받은 각 시퀀스 번호를 단순 반환만 하는 API를 생성하여 호출할 것을 감안하였다. 
+시퀀스 단순 반환을 위한 API는 다음과 같이 작성했다 :  
 
+```java
+@GetMapping("/call")
+public ResponseEntity<String> printSequence(@RequestParam Long sequence) {
+    return ResponseEntity.ok().body(sequence.toString());
+}
+```
 
+즉, local 서버 호출 경로가 `http://localhost:11000`라고 할 때, 각 호출 URL의 예시는 다음과 같을 것이다 :   
+e.g. `http://localhost:11000/api/call?sequence=53`  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---
 
