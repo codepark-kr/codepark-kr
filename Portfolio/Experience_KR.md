@@ -19,7 +19,7 @@
 > [카드뉴스 기능 개발](https://data.kma.go.kr/community/selectCardNewsList.do?pgmNo=722)
 > 
 > **기술 스택**  
-> Spring Framework, EgovFramework, JDK 1.7, MyBatis, Oracle DB
+> Spring Framework, EgovFramework, Java 7, MyBatis, Oracle DB
 >  
 >  **포지션**  
 >  full-stack
@@ -36,8 +36,23 @@
 > [지반침하모니터링 서비스 (진행 중)](https://landsafe.selab.cloud/)
 > 
 > **기술 스택**  
-> Spring Boot 2.5.4, JDK 11, JPA, MariaDB, ES6  
+> Spring Boot, Java 11, JPA, MariaDB, ES6  
 > Python, Amazon AWS, ELK, Docker, jenkins, k8s
 > 
 >  **포지션**  
 >  full-stack
+
+> **\[ 한국해양과학기술원 : 원격탐사기반의 해양오염 정보 자동 생산시스템 개발 R&D ]**  
+> 
+> [ScienceWatch@KIOST R&D 정보 (진행 중)](https://sciwatch.kiost.ac.kr/handle/2020.kiost/42536)
+> 
+> **위성 자료 조회 및 모델 구동 REST API**  
+> Spring Boot, JPA, PostGIS 기반의 REST API 개발  
+> Testcontainers, Rest Assured 기반의 테스트 코드 작성
+> 
+> **기술 스택**  
+> Spring Boot, Java 11, PostGIS, PostgreSQL,  
+> JPA, Rest Assured, JUnit5
+> 
+> **포지션**  
+>  back-end
