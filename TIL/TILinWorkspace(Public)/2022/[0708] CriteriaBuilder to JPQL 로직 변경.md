@@ -148,6 +148,8 @@ public Specification<SatBaseInfo> getBaseInfoByOptionalCondition(SatBaseInfoRequ
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     };
 }
+
+
 ...
 ```
 
@@ -158,7 +160,7 @@ public List<SatBaseInfo> getSatBaseInfo(SatBaseInfoRequest request) {
     SatBaseInfoRequest converted = setBaseInfoRequestByConverted(request);
     return baseInfoRepository.filterBaseInfoByOptions(
         converted.getGeometry(),
-        converted.getSensorName(),
+        converted.getSensorName(), 
         converted.getFrom(),
         converted.getUntil()
     );
@@ -172,6 +174,168 @@ Repository에 신규로 추가한 조회문을 태우기 위한 변수들의 형
 ---
 
 ### Task #2 Entity 전반 등 객체지향 설계에 맞게 리팩토링
+[객체지향의 사실과 오해 - 역할, 책임, 협력 관점에서 본 객체지향](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=60550259) 
+서적에서 반복적으로 강조하는 것 중 하나는 이 것이다 :  
+**"각 객체는 독립성을 가지고 있어야 한다. 모든 객체는 각자의 역할을 충실히 수행할 책임을 가지고 있으며, 그러한 객체 간의 협력이 바로 객체 지향적 설계의 핵심이다."**
+요컨대, 책에서 자주 언급하는 앨리스의 비유가 그러하다. 앨리스가 트럼프 카드 여왕이 주관하는 법정에서 말이다, 여왕은 목격자인 토끼에게 그가 본 것을 
+진술하라는 요청(Request)을 보낸다. 이 때, 목격한 것을 진술하는 역할을 가진 토끼는 그의 책임을 다하기 위해 그가 본 것을 법정에서 응답(Response)하여야 한다. 
+**단, 어떠한 수단과 어떠한 방법으로 진술할지에 대한 방식은 토끼(객체) 자신이 스스로 선택하여야 한다. 그와 협력하고 있는 또 다른 객체 - 진술을 요구한 트럼프 여왕과 
+피고인인 앨리스에게는 토끼에게 진술(역할을 수행하는) 방법을 강제할 권한이 없다.** 
+
+즉, 각 객체는 자신의 맡은 바 역할에 충실한다. 역할을 수행하는 방식에 대해서는 각 객체가 독립적으로 선택하고 수행한다. 협력관계에 있는 다른 객체들은 
+그 객체가 어떠한 방식으로 역할에 충실하는지 알 수 없고, 알아선 안 된다. - 는 것이다. 이러한 면에서, 기존의 API 구조는 Entity, DTO, Repository, Service, Controller간 그들의 역할이 독립적으로 분리되고 있었다고 보기 어렵다. 
+대표적으로 사용자로부터 요청받은 데이터(DTO)의 형변환 처리를 Service 단에서 수행하고 있는 경우가 바로 그러하다.
+
+**ServiceImpl**  
+```java
+...
+    if(request.getStartDate() != null && request.getEndDate() != null) {
+    predicates.add(ifTheValue.between(fromDB.get("satImgShtDt"),stringToLocalDateTime(request.getStartDate()), stringToLocalDateTime(request.getEndDate())));
+}
+...
+
+public LocalDateTime stringToLocalDateTime(String input){
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+        return LocalDateTime.parse(input.replace("-", "") + "0000", df)
+        .atZone(ZoneId.of(ZoneId.of("Asia/Seoul").getId())).toLocalDateTime();
+    }
+}
+```
+
+객체지향적 설계 관점에서, 사용자로부터 받은 데이터를 형변환하여 질의문에 대입할 수 있는 형태로 반환하는 것은 Service단이 아닌
+DTO(Data Transfer Object) 단에서 처리되어야 할 문제이다. 이에 따라, 기존 Service 단에서 작성했던 형변환 메소드 등을 제거하고, 
+DTO 내부에서 처리하여 Service단으로 넘겨준 후 Service단은 Repository에 파라미터를 파싱 후 바로 요청할 수 있게 리팩토링한다. 
+또한, 무분별한 @Builder, @Data 등의 annotation은 제거하고, builder 패턴을 직접 생성 후 활용할 수 있도록 한다. *@Builder
+annotation은 생성자를 자동 생성하는 사이드 이펙트를 유발하여, 선언이 지양된다. 
+
+**기존 RequestDTO**
+```java
+@Builder
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@Data
+public class SatBaseInfoRequest {
+
+    private String geometry;
+    private String sensorName;
+    private String startDate;
+    private String endDate;
+
+}
+```
+
+**개선된 RequestDTO**
+```java
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@Setter
+public class SatBaseInfoRequest {
+
+    private String geometry;
+    private String sensorName;
+    private String startDate;
+    private String endDate;
+
+    private LocalDateTime from;
+
+    private LocalDateTime until;
+
+    public SatBaseInfoRequest(String geometry, String sensorName, LocalDateTime from, LocalDateTime until) {
+        this.geometry = geometry;
+        this.sensorName = sensorName;
+        this.from = from;
+        this.until = until;
+    }
+
+    public static Builder builder() { return new Builder(); }
+
+    public static class Builder {
+        private String geometry = "";
+        private String sensorName = "";
+        private LocalDateTime from = LocalDateTime.now().minusDays(6);
+        private LocalDateTime until = LocalDateTime.now();
+
+        public Builder geometry(String geometry) {
+            if(geometry != null) { this.geometry = geometry; }
+            return this;
+        }
+
+        public Builder sensorName(String sensorName) {
+            if(sensorName != null) { this.sensorName = sensorName+"%"; }
+            return this;
+        }
+
+        public Builder from(String startDate) {
+            if(startDate != null) this.from = stringToLocalDateTime(startDate);
+            return this;
+        }
+
+        public Builder until(String endDate) {
+            if(endDate != null) this.until = stringToLocalDateTime(endDate);
+            return this;
+        }
+
+        public SatBaseInfoRequest build() {
+            return new SatBaseInfoRequest(
+                    geometry,
+                    sensorName,
+                    from,
+                    until
+            );
+        }
+
+        public static SatBaseInfoRequest setBaseInfoRequestByConverted(SatBaseInfoRequest request) {
+            return SatBaseInfoRequest.builder()
+                    .geometry(request.getGeometry())
+                    .sensorName(request.getSensorName())
+                    .from(request.getStartDate())
+                    .until(request.getEndDate())
+                    .build();
+        }
+
+        public LocalDateTime stringToLocalDateTime(String input){
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+            return LocalDateTime.parse(input.replace("-", "") + "0000", df)
+                    .atZone(ZoneId.of(ZoneId.of("Asia/Seoul").getId())).toLocalDateTime();
+        }
+    }
+}
+```
+
+요청 파라미터(Request)의 형변환, 기본값 대입, builder의 직접 생성, NoArgsConstructor의 접근제한자 설정이 완료되었다. 
+
+
+첫 번째로, 사용자로부터 받아오는 날짜, 위성 영상 촬영일의 조회 시작일, 조회 종료일은 String(YYYYMMDD) 형식으로 받게되므로 이를 본래 형태인
+LocalDateTime으로 변환이 필요하다. 단, 해당 API는 모든 조회 인자가 optional인 점을 고려하여, 지나치게 많은 데이터를 조회하는 위험
+(geometry 컬럼에 저장된 값은 단수의 각 값당 MB 단위의 용량을 가진다)을 감수하지 않도록 default startDate, endDate를 
+대입할 수 있도록 한다. 이는 위의 코드에서 `from`, `until`에 해당하는 변수로, 요청 현 시점으로부터 6일 전(LocalDateTime.now().minusDays(6)),
+요청 현 시점(LocalDateTime.now()) - 즉 요청일까지 일주일 간의 데이터를 조회하도록 설정하였다. 또한, String to LocalDateTime의 형변환 
+메소드를 기존 ServiceImpl에서 RequestDTO로 이동하였다. 
+
+둘 째로, 센서명의 LIKE 조회를 위한 조건부 '%'의 append, geometry, 센서명의 기본값 설정이다.  
+한 가지 유념해야 할 점은, 센서명(String), WKT-geometry(String)의 경우 사용자가 값을 전달하지 않아 null이 전달된다면
+null(bytea) `IS NOT(!=)` String(requested)의 상이한 타입간 비교 실행 불가로 에러가 발생하게 된다. 이에 따라, 사용자가 이 두 값에 대한
+파라미터를 추가하지 않는 경우 빈 String을 전달하도록 하고, 비교 구문 역시 `IS NOT NULL` 이 아닌 `!= ''` 으로 기본값을 대입하였다. 
+
+현업에서 조건부 검색 및 조회 등을 위해 LIKE을 사용하는 것은 조회 속도면에서 치명적으로 느리기 때문에 지양해야 하는 패턴임은 
+알고 있으나, 조회 조건이 `Sentinell1 /  Sentinell2`인 경우, Sentinell1A과 Sentinell1B /
+Sentinell2A와 Sentinell2B를 모두 조회하도록 하고, 예를 들어 ZXY라거나 ABC와 같은 그 외의 경우는 해당되는 단일의 결과값만 반환해야 한다는
+특수한 요구조건이 존재하였으므로 불가피하게 사용하게 되었다. - 이 또한 사용자가 센서명에 해당되는 조회 파라미터를 전달한 경우에만 '%'을 붙일 수 
+있도록, 조건부 처리하였다. 
+
+세 번째로, `@NoArgsConstructor(AccessLevel.PRIVATE)`의 접근제한자 설정은, 
+[조슈아 블로크의 이펙티브 자바 3/A](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=171196410) 를 읽으며 배운 것으로, 
+해당 객체의 무분별한 생성 및 호출(e.g. SatInfoRequest satInfoRequest = new SatInfoRequest();)와 같은 케이스를 방지하기 위한 
+것으로, 일반적으로 PROTECTED 또는 PRIVATE으로 설정한다.
+
+네 번째 Builder 패턴의 직접 생성은, 상기한 바와 같이 AllArgsConstructor를 자동 생성하는 사이트 이펙트를 방지하기 위해, builder 패턴을
+직접 생성하고 - 사용자로부터 받아온 startDate / endDate : String을 변환한 분리된 LocalDateTime 변수 - from, until을 자동으로 
+변환하여 대입할 수 있도록 설정하였다.
+
+마지막으로, 사용자로부터 받아온 all-String 값들을 상기한 형변환, 기본값 대입, 와일드 카드 추가 등의 과정을 거쳐서 완성된 DTO 객체를 
+생성할 수 있도록 별도의 메소드를 추가하였다. 이제 이 메소드를 Service 단에서 호출한 뒤, 각 변수를 Repository에 전달(협력)하는 것으로
+Service단은 그의 역할에만 충실할 수 있게 된다.
+
+---
 
 ### Task #3 사용자 식별 가능한 형태로의 geometry(Polygon, 4326) to WKT 변환
 
