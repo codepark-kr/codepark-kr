@@ -339,5 +339,51 @@ Service단은 그의 역할에만 충실할 수 있게 된다.
 
 ### Task #3 사용자 식별 가능한 형태로의 geometry(Polygon, 4326) to WKT 변환
 
+정말-정말 많은 삽질이 있었다. 아주-아주 많은 삽질을 했지만, 해결한 후 그 내용을 적고자 하니 사실 몇 줄 되지 않는다.  
+Task #1에서 언급했듯 PostGIS의 geometry에는 다양한 타입들이 존재하고, geometry to WKT, WKT to geometry 변환은
+PostGIS의 자체 함수를 통해 손쉽게 해결할 수 있다. 
+
+> **geometry(Polygon,4326) to WKT(Well-Known Text)**  
+>
+> ```sql
+> SELECT ST_AsText(geometry) FROM satellite_base_info;
+> ```
+>
+> input(example):  
+> `0103000020E61000000100000005000000F9669B1BD3816040CAC16C020C9F41405CE674594C8D60403EB0E3BF407E42402315C61682E66040BFD7101C974B424037FDD98F14D9604019E76F42216C4140F9669B1BD3816040CAC16C020C9F4140`  
+>
+> output(example):  
+> `POLYGON((0 0, 0 0, 0 0, 0 0, 0 0))`  
+
+> **WKT(Well-Known Text) to geometry(Polygon,4326)**   
+> 
+> ```sql
+> SELECT ST_PolygonFromText('POLYGON((0 0, 0 0, 0 0, 0 0, 0 0))',4326) FROM satellite_base_info;
+> ```
+>
+> input(example):  
+> `POLYGON((0 0, 0 0, 0 0, 0 0, 0 0))`
+> 
+> output(example):  
+> `0103000020E61000000100000005000000F9669B1BD3816040CAC16C020C9F41405CE674594C8D60403EB0E3BF407E42402315C61682E66040BFD7101C974B424037FDD98F14D9604019E76F42216C4140F9669B1BD3816040CAC16C020C9F4140`
+
+단! geometry에 해당하는 java 내 변수는 반드시 다음과 같이 선언해야 한다 :
+
+**Entity**
+```java
+@Column(name = "geometry", columnDefinition = "geometry(Polygon,4326)")
+private String geometry;
+```
+
+**Database(postGIS)**
+```sql
+CREATE TABLE satellite_base_info (
+    id integer not null,
+    geometry geometry(Polygon,4326)
+);
+```
+
+**@Column annotation 내 `columnDefinition` 설정에 주목하라.  
+이는 해당 테이블 생성문(DDL)의 geometry 컬럼의 데이터 타입 선언과 반드시 일치해야 한다.**
 
 ---
