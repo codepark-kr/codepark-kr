@@ -19,7 +19,7 @@ optional 변수 기반 위성 자료 조회 API를 JPQL 기반으로 로직 변�
 사용한 방법이 가독성이 떨어진다는 피드백이 있었기 때문이다.
 
 geometry(Polygon, 4326)을 WKT로 변환 후 반환한다는 것이 어떤 의미이냐? 이는 postgresql(PostGIS) 테이블에 저장된 geometry 값을 
-직접 확인 해 보면 알 수 있다. 테이블의 생성문을 확인 해 보면 해당 컬럼의 데이터 타입이 `geom geometry(Polygon, 4326)`로 정의된 것을 
+직접 확인 해 보면 알 수 있다. 테이블의 생성문을 확인 해 보면 해당 컬럼의 데이터 타입이 `geometry(Polygon, 4326)`로 정의된 것을 
 볼 수 있는데, 이는 PostGIS의 geometry 타입(MULTISTRING, POLYGON, MULTIPOLYGON ...) 중 Polygon 타입으로, SRID 4326으로 값을
 저장한다는 의미이다. 즉, geometry 값은 이런 식으로 저장되어 있다: 
 ```
