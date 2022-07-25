@@ -301,7 +301,7 @@ public class SatBaseInfoRequest {
 }
 ```
 
-요청 파라미터(Request)의 형변환, 기본값 대입, builder의 직접 생성, NoArgsConstructor의 접근제한자 설정이 완료되었다. 
+요청 파라미터(Request)의 형변환, 기본값 대입, builder의 직접 생성, 와일드카드 추가, NoArgsConstructor의 접근제한자 설정이 완료되었다. 
 
 
 첫 번째로, 사용자로부터 받아오는 날짜, 위성 영상 촬영일의 조회 시작일, 조회 종료일은 String(YYYYMMDD) 형식으로 받게되므로 이를 본래 형태인
