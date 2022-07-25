@@ -44,7 +44,7 @@ public void setUseYn(String useYn) { this.useYn = useYn; }
     List<String> findAllUseYn();
 ```
 
-`useYn` 이라는 `private String useYn`이라는 변수를 찾을 수 없다는 에러가 발생하게 되는 것이다.  
+`getUseYn`이라는 변수를 찾을 수 없다는 에러가 발생하게 되는 것이다.  
 이에 따라, 해당 annotation의 위치를 적절하게 바꿔주어야 한다. 다음과 같이 :  
 ```java
 @Column(name = "useYn") // annotation의 위치를 변수명 윗 라인으로 바꿔준다.
