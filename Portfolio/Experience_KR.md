@@ -43,12 +43,12 @@
 >  full-stack
 
 > **\[ 한국해양과학기술원 : 원격탐사기반의 해양오염 정보 자동 생산시스템 개발 R&D ]**  
-> 
-> [ScienceWatch@KIOST R&D 정보 (진행 중)](https://sciwatch.kiost.ac.kr/handle/2020.kiost/42536)
-> 
+>
 > **위성 자료 조회 및 모델 구동 REST API**  
 > Spring Boot, JPA, PostGIS 기반의 REST API 개발  
 > Testcontainers, Rest Assured 기반의 테스트 코드 작성
+> 
+> [ScienceWatch@KIOST R&D 정보 (진행 중)](https://sciwatch.kiost.ac.kr/handle/2020.kiost/42536)
 > 
 > **기술 스택**  
 > Spring Boot, Java 11, PostGIS, PostgreSQL,  
