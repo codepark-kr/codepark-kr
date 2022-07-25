@@ -1,4 +1,4 @@
-## Criteria Builder -> JPQL 로직 변경 및 리팩토링
+## Criteria Builder -> JPQL 로직 변경 및 리팩토링, PostGIS
 `2022.07.08`
 
 ## Introduction
