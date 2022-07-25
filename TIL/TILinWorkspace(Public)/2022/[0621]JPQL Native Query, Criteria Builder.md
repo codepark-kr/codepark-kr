@@ -196,7 +196,7 @@ public Specification<SatBaseInfo> getBaseInfoByOptionalCondition(SatBaseInfoRequ
 ```
 위와 같은 로직의 처리 순서는 다음과 같다 :  
 1. 사용자 요청값을 담고 있는 request DTO로부터 위성 촬영 센서명 값이 존재하면 criteriaBuilder(척도-builder)에 equals 조건문을 추가한다.
-2. request DTO로부터 startDate/endDate 값이 존재하면 위성 촬영 일자가 사용자 요청값 startDate 및 endDate의 between 조건문을 추가한다.
+2. request DTO로부터 startDate/endDate 값이 존재하면 위성 촬영 일자 startDate 및 endDate의 between 조건문을 추가한다.
 3. request DTO로부터 geometry 값이 존재하면 geometry equals 조건문을 추가한다.
 
 즉, 4종 - sensorName, startDate, endDate, geometry 값을 사용자로부터 받으나, 이 4가지 파라미터 모두 optional 변수이다.
