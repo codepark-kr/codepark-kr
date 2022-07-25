@@ -21,7 +21,7 @@ optional 변수 기반 위성 자료 조회 API를 JPQL 기반으로 로직 변�
 geometry(Polygon, 4326)을 WKT로 변환 후 반환한다는 것이 어떤 의미이냐? 이는 postgresql(PostGIS) 테이블에 저장된 geometry 값을 
 직접 확인 해 보면 알 수 있다. 테이블의 생성문을 확인 해 보면 해당 컬럼의 데이터 타입이 `geometry(Polygon, 4326)`로 정의된 것을 
 볼 수 있는데, 이는 PostGIS의 geometry 타입(MULTISTRING, POLYGON, MULTIPOLYGON ...) 중 Polygon 타입으로, SRID 4326으로 값을
-저장한다는 의미이다. 즉, geometry 값은 이런 식으로 저장되어 있다: 
+저장한다는 의미이다. 실제 geometry 값은 이런 식으로 저장되어 있다: 
 ```
 0103000020E61000000100000005000000F9669B1BD3816040CAC16C020C9F41405CE674594C8D60403EB0E3BF407E42402315C61682E66040BFD7101C974B424037FDD98F14D9604019E76F42216C4140F9669B1BD3816040CAC16C020C9F4140
 ```
@@ -34,7 +34,7 @@ PostGIS의 `ST_AsText` 함수를 사용하면 쉽게 변환이 가능하다.
 다음과 같이 :  
 
 ```sql
-SELECT ST_AsText(geom) FROM SatelliteBaseInfo;
+SELECT ST_AsText(geometry) FROM satellite_base_info;
 ```
 나쁜 소식은, 위와 같이 직접 함수를 태워 변환된 값을 JPA를 통해 조회 및 반환하게 하려면 일반적인 메소드 형식의 쿼리 작성(e.g. findByGeom) 및
 CriteriaBuilder를 통한 자동 생성으로는 불가능하기 때문에 직접 쿼리를 작성하는 JPQL, native query 형식을 통해야 한다는 것이다. 이에 따라, 
@@ -57,7 +57,7 @@ SELECT
 FROM
     satellite_base_info sat
 WHERE ('POLYGON((0 0, 0 0, 0 0, 0 0, 0 0))' IS NULL OR 
-        ST_AsText(sat.geometry) = 'POLYGON((0 0, 0 0, 0 0, 0 0, 0 0))');
+      ST_AsText(sat.geometry) = 'POLYGON((0 0, 0 0, 0 0, 0 0, 0 0))');
 ```
 
 여기서 `'POLYGON((0 0, 0 0, 0 0, 0 0, 0 0))'`은 사용자가 전달한 geometry 파라미터의 값이다.  
@@ -78,7 +78,7 @@ SELECT
 FROM
     satellite_base_info sat
 WHERE (null IS NULL OR 
-        ST_AsText(sat.geometry) = null);
+      ST_AsText(sat.geometry) = null);
 ```
 
 왜 이 방식이 흥미로운 것인지 발견했는가?  
@@ -127,12 +127,49 @@ geometry 값 대조 및 반환 또한 가능하다. 이에 따라, 기작성한 
             @Param("until") LocalDateTime until
     );
 ```
-지극히 당연하게도, PostGIS의 자체 함수를 사용해야 하므로 nativeQuery의 값은 반드시 true로 선언하여야 한다.  
+지극히 당연하게도, PostGIS의 자체 함수를 사용해야 하므로 nativeQuery의 값은 반드시 true로 선언하여야 한다.
+또한 ServiceImpl 또한 아래와 같은 형식으로 변경한다.
 
+**기존**
+```java
+public Specification<SatBaseInfo> getBaseInfoByOptionalCondition(SatBaseInfoRequest request) {
+    List<Predicate> predicates = new ArrayList<>();
+    return (root, query, criteriaBuilder) -> {
+        if(request.getSensorName() != null) {
+            predicates.add(criteriaBuilder.equal(root.get("satImgSnsrNm"), request.getSensorName()));
+        }
+        if(request.getStartDate() != null && request.getEndDate() != null) {
+            predicates.add(criteriaBuilder.between(root.get("satImgShtDt"),
+            stringToLocalDateTime(request.getStartDate()), stringToLocalDateTime(request.getEndDate())));
+        }
+        if(request.getGeometry() != null){
+            predicates.add(criteriaBuilder.equal(root.get("geom"), request.getGeometry()));
+        }
+        return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+    };
+}
+...
+```
 
+**개선 후**
+```java
+@Override
+public List<SatBaseInfo> getSatBaseInfo(SatBaseInfoRequest request) {
+    SatBaseInfoRequest converted = setBaseInfoRequestByConverted(request);
+    return baseInfoRepository.filterBaseInfoByOptions(
+        converted.getGeometry(),
+        converted.getSensorName(),
+        converted.getFrom(),
+        converted.getUntil()
+    );
+}
+```
+훨씬 간결하고, 가독성이 높아졌다.  
+Repository에 신규로 추가한 조회문을 태우기 위한 변수들의 형변환 역시 기존에는 ServiceImpl 내에서 처리하였지만, 
+보다 객체지향적인 설계에 맞도록 DTO 내부에서 형변환을 완료한 후, ServiceImpl에서 그 결과를 파싱하여 바로 Repository에 
+넘겨만 주면 되도록 설계를 수정하도록 하자.
 
-
-
+---
 
 ### Task #2 Entity 전반 등 객체지향 설계에 맞게 리팩토링
 
