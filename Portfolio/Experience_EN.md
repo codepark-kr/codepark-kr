@@ -45,12 +45,12 @@
 >  full-stack
 
 > **\[ Korea Institute of Ocean Science & Technology : Marine Security and Safety R&D ]**
-> 
-> [ScienceWatch@KIOST R&D information (work in progress)](https://sciwatch.kiost.ac.kr/handle/2020.kiost/42536)
 >
 > **Ocean Satellite Remote Sensing REST API Server**  
 > REST API Server based on Spring Boot, JPA, PostGIS   
 > Acceptance Testing using Rest Assured, Testcontainers
+> 
+> [ScienceWatch@KIOST R&D information (work in progress)](https://sciwatch.kiost.ac.kr/handle/2020.kiost/42536)
 >
 > **Tech Stack**  
 > Spring Boot, Java 11, PostGIS, PostgreSQL,  
