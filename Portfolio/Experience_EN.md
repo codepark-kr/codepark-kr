@@ -5,7 +5,7 @@
 > **REST API, in public data portal korea**  
 > Village Forecast Inquiry Service, ranked No. 1 in the public data portal korea open API utilization rankings 
 > (2011.1. ~ 2020.1. cumulative).  
-> Weather and climate data APIs on Oracle, Tibero environment.
+> Weather and climate data REST APIs on Oracle, Tibero environment.
 >  
 > [Short-term forecast inquiry service](https://www.data.go.kr/en/data/15084084/openapi.do)  
 > [Domestic airport take-off forecast inquiry service](https://www.data.go.kr/en/data/15095109/openapi.do)    
