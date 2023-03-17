@@ -13,7 +13,6 @@
 
 <h3 align="center">Stats</h3>
 <p align="center">
-  <image src="https://trailhead.salesforce.com/assets/ranks/hiker-0152fc202be8f3bea7652d621c238f87af9e7d79b126cb93e5c5e9775bbeab99.png" alt="trailhead" style="width: 100px;"/>
   <image src="https://github-profile-trophy.vercel.app/?username=codepark-kr&theme=onestar&row=1&column=5" alt="trophies"/>
 </p>
 
